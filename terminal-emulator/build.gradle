@@ -56,7 +56,8 @@ dependencies {
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    classifier "sources"
+    // https://youtrack.jetbrains.com/issue/KT-55624/Update-KGP-integration-tests-that-use-removed-in-Gradle-8-getClassifier-method
+    archiveClassifier.set("sources")
 }
 
 afterEvaluate {
@@ -64,7 +65,8 @@ afterEvaluate {
         publications {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
-                from components.release
+                // https://stackoverflow.com/questions/67253670/could-not-get-unknown-property-release-for-softwarecomponentinternal-maven-p
+                from components.findByName('release')
                 groupId = 'com.termux'
                 artifactId = 'terminal-emulator'
                 version = '0.118.0'

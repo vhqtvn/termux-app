@@ -71,7 +71,7 @@ dependencies {
 
 task sourceJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    classifier "sources"
+    archiveClassifier.set("sources")
 }
 
 afterEvaluate {
@@ -79,7 +79,7 @@ afterEvaluate {
         publications {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
-                from components.release
+                from components.findByName('release')
                 groupId = 'com.termux'
                 artifactId = 'termux-shared'
                 version = '0.118.0'
